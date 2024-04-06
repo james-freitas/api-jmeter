@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+
+  postgres_apijmeter:
+    container_name: postgres_apijmeter_kotlin
+    image: postgres:12-alpine
+    ports:
+      - '5431:5431'
+    command: -p 5431
+    environment:
+      POSTGRES_USER: apijmeter
+      POSTGRES_PASSWORD: apijmeter
+      POSTGRES_DB: apijmeter
+      PGDATA: /var/lib/postgresql/data/apijmeter/pgdata
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U apijmeter" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  dbdata:
+    driver: local

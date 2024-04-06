@@ -1,12 +1,16 @@
-# API JMeter Inventory
-Application that manages a product inventory fed by product entry or outflow
+# API JMeter
+Application with API accessing DB to test JMeter
 
 ## ✔️ Requirements
-- Java Development Kit 17 (jdk17)
+- Java Development Kit 21 (jdk21)
 
 ## 🍔 Stack
 - Spring boot 3.2.4
 - PostgreSQL
+
+## 📖 Swagger
+1. Run the application: `docker-compose up`, `./gradlew bootRun`
+2. Open in any browser: `http://localhost:8080/docs`
 
 ## ✈️ How to run locally
 1. First add all environment variables or run through the IDE using the `local.env` file

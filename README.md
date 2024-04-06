@@ -10,6 +10,12 @@ Application that manages a product inventory fed by product entry or outflow
 
 ## ✈️ How to run locally
 1. First add all environment variables or run through the IDE using the `local.env` file
+```shell
+## Variables you have to create on system or env file
+SPRING_DATASOURCE_URL=jdbc:postgresql://127.0.0.1:5431/apijmeter
+SPRING_DATASOURCE_USERNAME=apijmeter
+SPRING_DATASOURCE_PASSWORD=
+```
 2. Start the dependencies
 ```shell
 ## run docker compose

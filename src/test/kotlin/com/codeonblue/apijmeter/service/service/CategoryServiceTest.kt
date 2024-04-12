@@ -10,6 +10,7 @@ import de.huxhorn.sulky.ulid.ULID
 import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
@@ -52,6 +53,38 @@ class CategoryServiceTest {
             val categories = service.findAll()
 
             assertThat(categories.size).isEqualTo(0)
+        }
+    }
+
+    @Nested
+    inner class FindById {
+
+        @Test
+        fun `should find a category by id`() {
+
+            // given
+            val id = ULID().nextULID()
+            val categoryEntity = Optional.of(CategoryEntity(id, "Jewelry"))
+
+            // when
+            every { categoryRepository.findById(id) } returns categoryEntity
+
+            val categoryFound = service.findBy(id)
+
+            assertNotNull(categoryFound)
+            assertThat(categoryFound.name).isEqualTo("Jewelry")
+        }
+
+        @Test
+        fun `should thrown exception when category was not found`() {
+
+            // when
+            val id = ULID().nextULID()
+            every { categoryRepository.findById(id) } returns Optional.empty()
+
+            assertThrows<ResourceNotFoundException> {
+                service.findBy(id)
+            }
         }
     }
 

@@ -14,11 +14,11 @@ paths:
       operationId: getAllCategories
       responses:
         200:
-          description: Successful operation
+          description: Categories retrieved
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CategoryResponseDto'
+                $ref: '#/components/schemas/ListOfCategoryResponseDto'
     post:
       tags:
         - Categories
@@ -69,6 +69,38 @@ paths:
       responses:
         204:
           description: Category deleted
+        400:
+          description: Invalid id supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceNotFound"
+    get:
+      tags:
+        - Categories
+      summary: Retrieves category by id
+      description: One id is informed to retrieve a category
+      operationId: getCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: Id that need to be informed
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Category retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResponseDto'
         400:
           description: Invalid id supplied
           content:
@@ -224,6 +256,20 @@ components:
           type: string
           description: Category description
           example: "Category description"
+
+    ListOfCategoryResponseDto:
+      type: array
+      items:
+        properties:
+          id:
+            type: string
+            description: Id of the category
+            example: "01HFJH0FPPXGXAG96ASQ7ASGRC"
+          description:
+            type: string
+            description: Category description
+            example: "Category description"
+
     CategoryCreateRequestDto:
       type: object
       properties:

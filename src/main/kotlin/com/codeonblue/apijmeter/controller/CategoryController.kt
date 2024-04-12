@@ -40,6 +40,13 @@ class CategoryController(val categoryService: CategoryService) {
         return ResponseEntity<Void>(HttpStatus.NO_CONTENT)
     }
 
+    @GetMapping("/{categoryId}")
+    fun getById(@PathVariable categoryId: String): ResponseEntity<CategoryResponse> {
+        val category = categoryService.findBy(categoryId)
+        logger.info("Category of id: $categoryId retrieved successfully")
+        return ResponseEntity<CategoryResponse>(CategoryResponse.valueOf(category), HttpStatus.OK)
+    }
+
     @PutMapping("/{categoryId}")
     fun update(
         @PathVariable @Pattern(regexp = "^[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{26}$")categoryId: String,

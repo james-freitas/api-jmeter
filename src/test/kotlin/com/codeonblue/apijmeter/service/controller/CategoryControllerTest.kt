@@ -285,6 +285,43 @@ class CategoryControllerTest {
         }
     }
 
+    @Nested
+    inner class FindById {
+
+        @Test
+        fun `should find category by id`() {
+
+            // given
+            val categoryId = ULID().nextULID()
+            val category = Category(id = categoryId, name = "Category1")
+
+            // when
+            every { categoryService.findBy(categoryId) } returns category
+
+            mockMvc.perform(get("$BASE_PATH/$categoryId"))
+                .andExpect(status().isOk)
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Category1"))
+        }
+
+        @Test
+        fun `should fail to get a category when it does not exist`() {
+
+            // given
+            val categoryId = ULID().nextULID()
+
+            // when
+            every { categoryService.findBy(categoryId) } throws ResourceNotFoundException()
+
+            mockMvc.perform(get("$BASE_PATH/$categoryId"))
+                .andExpect(status().isNotFound)
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("about:blank"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Resource was not found"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(HttpStatus.NOT_FOUND.value()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.detail").value("Could not find resource"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.instance").value("/api/v1/categories/$categoryId"))
+        }
+    }
+
     companion object {
         const val BASE_PATH = "/api/v1/categories"
     }

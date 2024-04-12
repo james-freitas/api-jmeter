@@ -30,3 +30,17 @@ docker-compose up
 ## start web application
 ./gradlew bootRun
 ```
+
+## 📈 Performance tests
+1. Put the [Postgres jar](https://repo1.maven.org/maven2/org/postgresql/postgresql/42.2.20/postgresql-42.2.20.jar) on JMeter's lib folder
+2. Start the dependencies
+```shell
+## run docker compose
+docker-compose up
+```
+3. Execute the application (it will start on port 8080)
+```shell
+## start web application
+./gradlew bootRun
+```
+4. Run JMeter tests which are on jmeter's folder

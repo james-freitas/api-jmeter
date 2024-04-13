@@ -9,7 +9,7 @@
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Create Categories">
-        <stringProp name="TestPlan.comments">Ramp Up: 300s (5 minutes) | Execute 4 bateries of 10 minutes with 20, 40, 80 and 160 threads or Ramp Up 30s and bateries of 2, 4, 6 and 8</stringProp>
+        <stringProp name="TestPlan.comments">Ramp Up: 300s (5 minutes) | Execute 4 bateries of 10 minutes with 20, 40, 80 and 160 threads or Ramp Up 30s and bateries of 2, 4, 6 and 8 threads</stringProp>
         <intProp name="ThreadGroup.num_threads">2</intProp>
         <intProp name="ThreadGroup.ramp_time">30</intProp>
         <longProp name="ThreadGroup.duration">120</longProp>

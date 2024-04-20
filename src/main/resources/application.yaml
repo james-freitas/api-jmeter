@@ -36,3 +36,10 @@ springdoc:
   swagger-ui:
     path: /docs
     url: open-api.yaml
+
+# Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

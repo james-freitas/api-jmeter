@@ -19,6 +19,22 @@ services:
       timeout: 5s
       retries: 5
 
+  prometheus_apijmeter:
+    image: prom/prometheus:latest
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    restart: always
+
 volumes:
   dbdata:
     driver: local
+  prometheus_data: {}
+
+networks:
+  default:
+    name: "api_jmeter_network"

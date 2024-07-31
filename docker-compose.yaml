@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   postgres_apijmeter:
-    container_name: postgres_apijmeter_kotlin
+    container_name: postgres-apijmeter-kotlin
     image: postgres:12-alpine
     ports:
       - '5431:5431'
@@ -20,6 +20,7 @@ services:
       retries: 5
 
   prometheus_apijmeter:
+    container_name: prometheus-apijmeter
     image: prom/prometheus:latest
     volumes:
       - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -29,12 +30,26 @@ services:
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     restart: always
+    networks:
+      - "api-jmeter-network"
+
+  grafana_apijmeter:
+    container_name: grafana-apijmeter
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker/grafana:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana/apijmeter
+    networks:
+      - "api-jmeter-network"
 
 volumes:
   dbdata:
     driver: local
   prometheus_data: {}
+  grafana_data: {}
 
 networks:
-  default:
-    name: "api_jmeter_network"
+  api-jmeter-network:
+    driver: bridge
